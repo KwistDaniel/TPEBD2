@@ -158,8 +158,7 @@ export default function AcreditacionEdit() {
         setDateFI(dayjs(data[0].AFechaInicio,"DD/MM/YYYY"))
 
 
-        console.log(data[0].AFechaFin === '')
-        if(data[0].AFechaFin !== ''){
+        if(data[0].AFechaFin !== null){
             setDateFF(dayjs(data[0].AFechaFin,"DD/MM/YYYY"))
         }
         else{

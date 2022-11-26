@@ -157,30 +157,32 @@ export default function AcreditacionesList(){
             setCar(v)
             setShowAcreditaciones(true)
             loadAcreditaciones(v.id)
+
         }
     };
 
     const columnas = [
-        {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
-        {field: 'idA', headerName: 'CodigoA', flex: 1, hide: true},
-        {field: 'ANumeroExpediente', headerName: 'Nº de Expediente', flex: 1, renderCell: (params) => (
-                <Tooltip title={params.value} >
-                    <span >{params.value}</span>
-                </Tooltip>
-            )},
-        {field: 'AConvocatoria', headerName: 'Convocatoria', flex: 1,
+        {field: 'id', headerName: 'id', flex: 1, hide: true},
+        {field: 'idA', headerName: 'idA', flex: 1, hide: true},
+        {field: 'ANumeroExpediente', headerName: 'Nº de Expediente', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+        {field: 'AConvocatoria', headerName: 'Convocatoria', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -188,51 +190,51 @@ export default function AcreditacionesList(){
             )},
         {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
         {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
-        {field: 'Estado', headerName: 'Estado', flex: 1,
+        {field: 'Estado', headerName: 'Estado', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'Tipo', headerName: 'Tipo', flex: 1,
+        {field: 'Tipo', headerName: 'Tipo', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )
         },
-        {field: 'AObservacionProceso', headerName: 'Obs. del Proceso', flex: 1,
+        {field: 'AObservacionProceso', headerName: 'Obs. del Proceso', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AObservacionFinalizacion', headerName: 'Obs. de la Finalización', flex: 1,
+        {field: 'AObservacionFinalizacion', headerName: 'Obs. de la Finalización', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'Instancias', flex: 1, renderCell: (cellValues) => {return (<Button variant='text'
+        {field: 'Instancias', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button variant='text'
                                                                                     style={{color: 'black'}}
                                                                                     onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.id, idf: fac.id,idc: car.id}})}}
                                                                             >Ver</Button>)}},
-        {field: 'Participantes', flex: 1, renderCell: (cellValues) => {return (<Button
+        {field: 'Participantes', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button
                                                                                     variant='text'
                                                                                     style={{color: 'black'}}
                                                                                     onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: fac.id,idc: car.id}})}}
                                                                                 >Ver</Button>)}},
         {field: 'idC', headerName: 'Carrera', flex: 1, hide: true},
-        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (cellValues) => {return (
                 <Button
-                    onClick={() => {navigate('/acreditaciones/edit' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
+                    onClick={() => {navigate('/acreditaciones/edit' , {state: {ida: cellValues.row.idA,idf: fac.id, idc:car.id}})}}
                     color="inherit"
                 ><HistoryEduIcon /></Button>)}},
-        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
+        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (cellValues) => {return (
                 <Button
-                    onClick={() => {navigate('/acreditaciones/delete' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
+                    onClick={() => {navigate('/acreditaciones/delete' , {state: {ida: cellValues.row.idA,idf: fac.id, idc:car.id}})}}
                     color="inherit"
                 ><DeleteIcon /></Button>)}},
     ]
@@ -280,6 +282,16 @@ export default function AcreditacionesList(){
                                         label="Carrera"/>}
                             />
                         </Grow>
+                    </Box>
+                    <Box
+                        sx={{
+                            height: 300,
+                            width: '100%',
+                            '& .super-app-theme--header': {
+                                backgroundColor: '#688A81',
+                            },
+                        }}
+                    >
                         <Grow in={showAcreditaciones} unmountOnExit>
                             <div style={{height: '100%' }}>
                                 <DataGrid
@@ -290,12 +302,6 @@ export default function AcreditacionesList(){
                                     columns={columnas}
                                     pageSize={5}
                                     rowsPerPageOptions={[5]}
-
-                                    initialState={{
-                                        sorting:{
-                                            sortModel: [{field: 'id', sort: 'asc'}],
-                                        },
-                                    }}
                                     minHeight={750}
                                     rowMouseEnter
                                 />
