@@ -4,10 +4,7 @@ import {Box} from "@mui/system";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import {esES, GridPrintExportMenuItem, GridToolbarExport} from '@mui/x-data-grid'
+import {esES, GridPrintExportMenuItem} from '@mui/x-data-grid'
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grow from '@mui/material/Grow'
@@ -133,8 +130,8 @@ export default function Informes(){
         const dataF = await responseF.json()
         var newListF =[]
         for( var i=0; i<dataF.length;i++){
-            var obj = {label: dataF[i].FNombre, id: dataF[i].id}
-            newListF.push(obj)
+            var objf = {label: dataF[i].FNombre, id: dataF[i].id}
+            newListF.push(objf)
         }
         setFacultades(newListF)
 
@@ -142,18 +139,18 @@ export default function Informes(){
         const responseA = await fetch('http://localhost:4000/acreditaciones')
         const dataA = await responseA.json()
         var newListA = []
-        for(var i=0;i<dataA.length;i++){
+        for(var j=0;j<dataA.length;j++){
             var obj = {
-                id: dataA[i].id,
-                ANumeroExpediente: dataA[i].ANumeroExpediente,
-                AConvocatoria: dataA[i].AConvocatoria,
-                AFechaInicio: dataA[i].AFechaInicio,
-                AFechaFin: dataA[i].AFechaFin,
-                AEstado: dataA[i].AEstado,
-                ATipo: dataA[i].ATipo,
-                AObservacionProceso: dataA[i].AObservacionProceso,
-                AObservacionFinalizacion: dataA[i].AObservacionFinalizacion,
-                idC: dataA[i].idC,
+                id: dataA[j].id,
+                ANumeroExpediente: dataA[j].ANumeroExpediente,
+                AConvocatoria: dataA[j].AConvocatoria,
+                AFechaInicio: dataA[j].AFechaInicio,
+                AFechaFin: dataA[j].AFechaFin,
+                AEstado: dataA[j].AEstado,
+                ATipo: dataA[j].ATipo,
+                AObservacionProceso: dataA[j].AObservacionProceso,
+                AObservacionFinalizacion: dataA[j].AObservacionFinalizacion,
+                idC: dataA[j].idC,
             }
             if(obj.AEstado === 1) {
                 obj.Estado = "Vigente";
@@ -178,52 +175,64 @@ export default function Informes(){
 
         setAcreditacionI1(ac1)
         setAcreditacionI2(ac2)
-
-
     }
+
     const loadAcreditacionesI3 = async (idf) => {
-        const responseC = await fetch('http://localhost:4000/carreras/' + idf)
-        const dataC = await responseC.json()
-        var newListC = []
-        for( var i=0; i<dataC.length;i++){
-            newListC.push(dataC[i].id)
-        }
         var newListA = []
-        for(var j=0;j<newListC.length;j++){
-            const responseA = await fetch('http://localhost:4000/acreditaciones/carrera/' + newListC[j])
-            const dataA = await responseA.json()
-            for(var i=0;i<dataA.length;i++){
-                var obj = {
-                    id: dataA[i].id,
-                    ANumeroExpediente: dataA[i].ANumeroExpediente,
-                    AConvocatoria: dataA[i].AConvocatoria,
-                    AFechaInicio: dataA[i].AFechaInicio,
-                    AFechaFin: dataA[i].AFechaFin,
-                    AEstado: dataA[i].AEstado,
-                    ATipo: dataA[i].ATipo,
-                    AObservacionProceso: dataA[i].AObservacionProceso,
-                    AObservacionFinalizacion: dataA[i].AObservacionFinalizacion,
-                    idC: dataA[i].idC,
+        var index=1;
+        const responseA = await fetch('http://localhost:4000/acreditaciones/facultad/' + idf)
+        const dataA = await responseA.json()
+        for(var i=0;i<dataA.length;i++){
+            var obj = {
+                id: index,
+                idA: dataA[i].id,
+                ANumeroExpediente: dataA[i].ANumeroExpediente,
+                AConvocatoria: dataA[i].AConvocatoria,
+                AFechaInicio: dataA[i].AFechaInicio,
+                AFechaFin: dataA[i].AFechaFin,
+                AEstado: dataA[i].AEstado,
+                ATipo: dataA[i].ATipo,
+                AObservacionProceso: dataA[i].AObservacionProceso,
+                AObservacionFinalizacion: dataA[i].AObservacionFinalizacion,
+                idC: dataA[i].idC,
 
-                }
-                if(obj.AEstado === 1) {
-                    obj.Estado = "Vigente";
-                }
-                else if(obj.AEstado === 2){
-                    obj.Estado = "Finalizado";
-                }
-                else{
-                    obj.Estado = "Falla";
-                }
-                if(obj.ATipo === 1){
-                    obj.Tipo = "Carrera nueva";
-                }
-                else{
-                    obj.Tipo = "Carrera en funcionamiento";
-                }
-                newListA.push(obj)
             }
+            if(obj.AEstado === 1) {
+                obj.Estado = "Vigente";
+            }
+            else if(obj.AEstado === 2){
+                obj.Estado = "Finalizado";
+            }
+            else{
+                obj.Estado = "Falla";
+            }
+            if(obj.ATipo === 1){
+                obj.Tipo = "Carrera nueva";
+            }
+            else{
+                obj.Tipo = "Carrera en funcionamiento";
+            }
+            var fi = (
+                dataA[i].AFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                dataA[i].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                dataA[i].AFechaInicio.substring(8,10).toString()
+            )
+            obj.AFechaInicio = fi;
 
+            if(dataA[i].AFechaFin !== null){
+                var ff = (
+                    dataA[i].AFechaFin.substring(0,4).toString() +
+                    String.fromCharCode(47) +
+                    dataA[i].AFechaFin.substring(5,7).toString() +
+                    String.fromCharCode(47) +
+                    dataA[i].AFechaFin.substring(8,10).toString()
+                )
+                obj.AFechaFin = ff;
+            }
+            newListA.push(obj)
+            index++;
         }
         setAcreditacionI3(newListA)
     }
@@ -273,8 +282,18 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1},
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
         {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
         {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
         {field: 'Estado', headerName: 'Estado', flex: 1,
@@ -326,8 +345,18 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1},
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
         {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
         {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
         {field: 'Estado', headerName: 'Estado', flex: 1,
@@ -379,8 +408,18 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1},
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
         {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
         {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
         {field: 'Estado', headerName: 'Estado', flex: 1,
@@ -458,11 +497,6 @@ export default function Informes(){
                                                     pageSize={10}
                                                     rowsPerPageOptions={[10]}
                                                     components={{Toolbar: CustomExport}}
-                                                    initialState={{
-                                                        sorting:{
-                                                            sortModel: [{field: 'id', sort: 'asc'}],
-                                                        },
-                                                    }}
                                                     minHeight={750}
                                                     rowMouseEnter
                                                 />
@@ -497,11 +531,6 @@ export default function Informes(){
                                                     pageSize={10}
                                                     rowsPerPageOptions={[10]}
                                                     components={{Toolbar: CustomExport}}
-                                                    initialState={{
-                                                        sorting:{
-                                                            sortModel: [{field: 'id', sort: 'asc'}],
-                                                        },
-                                                    }}
                                                     minHeight={750}
                                                     rowMouseEnter
                                                 />
@@ -558,11 +587,6 @@ export default function Informes(){
                                                         rowsPerPageOptions={[10]}
                                                         pagination
                                                         components={{Toolbar: CustomExport}}
-                                                        initialState={{
-                                                            sorting:{
-                                                                sortModel: [{field: 'id', sort: 'asc'}],
-                                                            },
-                                                        }}
                                                         minHeight={750}
                                                         rowMouseEnter
                                                     />

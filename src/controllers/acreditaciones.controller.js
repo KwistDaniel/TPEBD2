@@ -3,7 +3,25 @@ const pool = require('../db');
 
 const getAcreditaciones = async(req,res,next) => {
     try{
-        const result = await pool.query('SELECT * FROM "Acreditacion" WHERE status = TRUE ORDER BY id ASC');
+        const result = await pool.query('SELECT * FROM "Acreditacion" WHERE status = TRUE ORDER BY "AFechaInicio" ASC');
+        return res.json(result.rows);
+    }
+    catch (error){
+        next(error);
+    }
+}
+
+const getAcreditacionesPorFacultad = async(req,res,next) => {
+    try{
+        const {id} = req.params;
+        const result = await pool.query(
+            'SELECT\n' +
+            '"Acreditacion".id,"Acreditacion"."ANumeroExpediente","Acreditacion"."AConvocatoria","Acreditacion"."AFechaInicio","Acreditacion"."AFechaFin","Acreditacion"."AEstado","Acreditacion"."ATipo","Acreditacion"."AObservacionProceso","Acreditacion"."AObservacionFinalizacion","Acreditacion"."idC","Acreditacion".status\n' +
+            'FROM "Acreditacion" \n' +
+            'JOIN "Carrera" ON "Carrera".id = "Acreditacion"."idC"\n' +
+            'WHERE (("Carrera"."idF" = $1) AND ("Acreditacion".status = TRUE))\n' +
+            'ORDER BY "Acreditacion"."AFechaInicio" ASC'
+            ,[id]);
         return res.json(result.rows);
     }
     catch (error){
@@ -14,7 +32,7 @@ const getAcreditaciones = async(req,res,next) => {
 const getAcreditacionesPorCarrera = async(req,res,next) => {
     try{
         const {id} = req.params;
-        const result = await pool.query('SELECT * FROM "Acreditacion" WHERE ((status = TRUE) AND ("idC" = $1)) ORDER BY id ASC',[id]);
+        const result = await pool.query('SELECT * FROM "Acreditacion" WHERE ((status = TRUE) AND ("idC" = $1)) ORDER BY "AFechaInicio" ASC',[id]);
         return res.json(result.rows);
     }
     catch (error){
@@ -478,6 +496,7 @@ const uploadFiles = (req,res,next) => {
 
 module.exports = {
     getAcreditaciones,
+    getAcreditacionesPorFacultad,
     getAcreditacionesPorCarrera,
     getAcreditacionesPorId,
     postAcreditacion,

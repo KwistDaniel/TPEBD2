@@ -30,7 +30,6 @@ export default function AcreditacionesList(){
     const [showCarreras,setShowCarreras] = useState(false);
     const [showAcreditaciones,setShowAcreditaciones] = useState(false);
     const [acreditacion, setAcreditacion] = useState([])
-    const [acSel,setAcSel] = useState(null);
 
     /*Loaders*/
     async function loadFacultades(){
@@ -74,25 +73,60 @@ export default function AcreditacionesList(){
     }
     const loadAcreditaciones = async (idCar) => {
         const response = await fetch('http://localhost:4000/acreditaciones/carrera/' + idCar)
-        const data = await response.json()
-        for( var i=0;i<data.length;i++){
-            if(data[i].AEstado === 1) {
-                data[i].Estado = "Vigente";
+        const dataA = await response.json()
+        var newList = []
+        for( var j=dataA.length-1;j>=0;j--){
+            var obj = {
+                id: j,
+                idA: dataA[j].id,
+                ANumeroExpediente: dataA[j].ANumeroExpediente,
+                AConvocatoria: dataA[j].AConvocatoria,
+                AFechaInicio: dataA[j].AFechaInicio,
+                AFechaFin: dataA[j].AFechaFin,
+                AEstado: dataA[j].AEstado,
+                ATipo: dataA[j].ATipo,
+                AObservacionProceso: dataA[j].AObservacionProceso,
+                AObservacionFinalizacion: dataA[j].AObservacionFinalizacion,
+                idC: dataA[j].idC,
             }
-            else if(data[i].AEstado === 2){
-                data[i].Estado = "Finalizado";
+            if(obj.AEstado === 1){
+                obj.Estado = "Vigente";
+            }
+            else if(obj.AEstado === 2){
+                obj.Estado = "Finalizado";
             }
             else{
-                data[i].Estado = "Falla";
+                obj.Estado = "Falla";
             }
-            if(data[i].ATipo === 1){
-                data[i].Tipo = "Carrera nueva";
+            if(obj.ATipo === 1){
+                obj.Tipo = "Carrera nueva";
             }
             else{
-                data[i].Tipo = "Carrera en funcionamiento";
+                obj.Tipo = "Carrera en funcionamiento";
             }
+
+            var fi = (
+                obj.AFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                obj.AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                obj.AFechaInicio.substring(8,10).toString()
+            )
+            obj.AFechaInicio = fi;
+
+            if(obj.AFechaFin !== null){
+                var ff = (
+                    obj.AFechaFin.substring(0,4).toString() +
+                    String.fromCharCode(47) +
+                    obj.AFechaFin.substring(5,7).toString() +
+                    String.fromCharCode(47) +
+                    obj.AFechaFin.substring(8,10).toString()
+                )
+                obj.AFechaFin = ff;
+            }
+            newList.push(obj)
         }
-        setAcreditacion(data)
+        setAcreditacion(newList)
     }
 
     /*Handlers*/
@@ -125,30 +159,10 @@ export default function AcreditacionesList(){
             loadAcreditaciones(v.id)
         }
     };
-    const handleRowClick = (e,v) => {
-        setAcSel(e.row)
-    }
-    const handleClickParticipantes = (e,v) => {
-        console.log("columna:")
-        console.log(v)
-        console.log(v.id)
-    }
-
 
     const columnas = [
-        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/acreditaciones/delete' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
-                    color="inherit"
-                ><DeleteIcon /></Button>)}},
-        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/acreditaciones/edit' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
-                    color="inherit"
-                ><HistoryEduIcon /></Button>)}},
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
+        {field: 'idA', headerName: 'CodigoA', flex: 1, hide: true},
         {field: 'ANumeroExpediente', headerName: 'Nº de Expediente', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -160,8 +174,18 @@ export default function AcreditacionesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1},
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
         {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
         {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
         {field: 'Estado', headerName: 'Estado', flex: 1,
@@ -198,7 +222,19 @@ export default function AcreditacionesList(){
                                                                                     style={{color: 'black'}}
                                                                                     onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: fac.id,idc: car.id}})}}
                                                                                 >Ver</Button>)}},
-        {field: 'idC', headerName: 'Carrera', flex: 1, hide: true}
+        {field: 'idC', headerName: 'Carrera', flex: 1, hide: true},
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/acreditaciones/edit' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
+                    color="inherit"
+                ><HistoryEduIcon /></Button>)}},
+        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/acreditaciones/delete' , {state: {ida: cellValues.id,idf: fac.id, idc:car.id}})}}
+                    color="inherit"
+                ><DeleteIcon /></Button>)}},
     ]
 
     useEffect(() => {
@@ -221,8 +257,6 @@ export default function AcreditacionesList(){
                             sx={{width:550, p: 1}}
                             onChange={handleChangeFF}
                             fullWidth
-                            //onChange={handleChangeFF}
-                            //onMouseLeave={mouseLeaveFF}
                             renderInput={(params) =>
                                 <TextField
                                     {...params}
@@ -264,7 +298,6 @@ export default function AcreditacionesList(){
                                     }}
                                     minHeight={750}
                                     rowMouseEnter
-                                    onRowClick={handleRowClick}
                                 />
                             </div>
                         </Grow>

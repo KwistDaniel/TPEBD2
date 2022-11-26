@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {getAcreditaciones, getAcreditacionesPorCarrera, getAcreditacionesPorId, postAcreditacion,
+const {getAcreditaciones, getAcreditacionesPorFacultad, getAcreditacionesPorCarrera, getAcreditacionesPorId, postAcreditacion,
     putAcreditacion, getInstancias, getInstancia, putInstancia, getInstanciasPorId, postInstancia,
     getFacultades, getFacultad, postFacultad, getCarreras, getCarrera, getCarrerasPorFac, postCarrera,
     putCarrera,
@@ -11,6 +11,8 @@ const pool = require('../db');
 const router = Router();
 
 router.get('/acreditaciones', getAcreditaciones)
+
+router.get('/acreditaciones/facultad/:id', getAcreditacionesPorFacultad)
 
 router.get('/acreditaciones/carrera/:id', getAcreditacionesPorCarrera)
 

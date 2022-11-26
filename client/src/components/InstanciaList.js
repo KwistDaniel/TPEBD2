@@ -55,6 +55,35 @@ export default function InstanciaList(){
                 if(data[i].idTI === data2[j].id){
                     data[i].idTI = data2[j].TITipo;
                 }
+                var fi = (
+                    data[i].IFechaInicio.substring(0,4).toString() +
+                    String.fromCharCode(47) +
+                    data[i].IFechaInicio.substring(5,7).toString() +
+                    String.fromCharCode(47) +
+                    data[i].IFechaInicio.substring(8,10).toString()
+                )
+                data[i].IFechaInicio = fi;
+
+                if(data[i].IFechaPresentacion !== null){
+                    var fp = (
+                        data[i].IFechaPresentacion.substring(0,4).toString() +
+                        String.fromCharCode(47) +
+                        data[i].IFechaPresentacion.substring(5,7).toString() +
+                        String.fromCharCode(47) +
+                        data[i].IFechaPresentacion.substring(8,10).toString()
+                    )
+                    data[i].IFechaPresentacion = fp;
+                }
+                if(data[i].IFechaLimite !== null){
+                    var fl = (
+                        data[i].IFechaLimite.substring(0,4).toString() +
+                        String.fromCharCode(47) +
+                        data[i].IFechaLimite.substring(5,7).toString() +
+                        String.fromCharCode(47) +
+                        data[i].IFechaLimite.substring(8,10).toString()
+                    )
+                    data[i].IFechaLimite = fl;
+                }
             }
         }
         setInstancias(data)
@@ -114,7 +143,7 @@ export default function InstanciaList(){
         loadCarrera(idc)
         loadAcreditacion(ida)
         loadInstancias(ida)
-    }, [])
+    }, [idf,idc,ida])
 
 
     return(

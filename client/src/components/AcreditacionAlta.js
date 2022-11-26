@@ -264,6 +264,7 @@ export default function AcreditacionAlta() {
         }
         setPersonasDisponibles(data)
     }
+
     async function loadRoles(){
         const response = await fetch('http://localhost:4000/roles')
         const data = await response.json()
@@ -358,7 +359,7 @@ export default function AcreditacionAlta() {
         }
         else{
             setDateFI(newValue);
-            setAcreditacion({...acreditacion, 'fechaInicio': (newValue).format('DD/MM/YYYY')});
+            setAcreditacion({...acreditacion, 'fechaInicio': (newValue).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFechaFin = (newValue) => {
@@ -368,7 +369,7 @@ export default function AcreditacionAlta() {
         }
         else{
             setDateFF(newValue);
-            setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('DD/MM/YYYY')});
+            setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('YYYY-MM-DD')});
         }
 
     };
@@ -462,7 +463,7 @@ export default function AcreditacionAlta() {
         }
         else{
             setDateFIIns(e);
-            setInstancia({...instancia, 'fechaInicio': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaInicio': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFPIns = e => {
@@ -471,7 +472,7 @@ export default function AcreditacionAlta() {
             setInstancia({...instancia, 'fechaPresentacion': ""});
         } else {
             setDateFPIns(e);
-            setInstancia({...instancia, 'fechaPresentacion': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaPresentacion': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFLIns = e => {
@@ -480,18 +481,25 @@ export default function AcreditacionAlta() {
             setInstancia({...instancia, 'fechaLimite': ""});
         } else {
             setDateFLIns(e);
-            setInstancia({...instancia, 'fechaLimite': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaLimite': (e).format('YYYY-MM-DD')});
         }
     };
     const handleAlta = async () =>{
         /**
          * Alta Acreditacion
          */
+        var ff;
+        if(acreditacion.fechaFin === ""){
+            ff = null
+        }
+        else{
+            ff = acreditacion.fechaFin
+        }
         var acrAlt = {
             ANumeroExpediente: acreditacion.numeroExpediente,
             AConvocatoria: acreditacion.convocatoria,
             AFechaInicio: acreditacion.fechaInicio,
-            AFechaFin: acreditacion.fechaFin,
+            AFechaFin: ff,
             ATipo: acreditacion.tipo,
             AEstado: acreditacion.estado,
             AObservacionProceso: acreditacion.obsProceso,
@@ -543,12 +551,26 @@ export default function AcreditacionAlta() {
             /**
              * Alta Formalizacion
              */
+            var fp;
+            if(instancia.fechaPresentacion === ""){
+                fp = null
+            }
+            else{
+                fp = instancia.fechaPresentacion
+            }
+            var fl;
+            if(instancia.fechaLimite === ""){
+                fl = null
+            }
+            else{
+                fl = instancia.fechaLimite
+            }
             if(showFormalizacion === true){
                 var forAlt = {
                     IObservacion: instancia.observacion,
                     IFechaInicio: instancia.fechaInicio,
-                    IFechaPresentacion: instancia.fechaPresentacion,
-                    IFechaLimite: instancia.fechaLimite,
+                    IFechaPresentacion: fp,
+                    IFechaLimite: fl,
                     idA: idA,
                     idTI: 1,
                 }
@@ -665,7 +687,7 @@ export default function AcreditacionAlta() {
                                                         id='fechaInicio'
                                                         name='fechaInicio'
                                                         label="Fecha de Inicio"
-                                                        inputFormat="DD/MM/YYYY"
+                                                        inputFormat="YYYY-MM-DD"
                                                         value={dateFI}
                                                         sx={{width:300, p: 1, display: 'block'}}
                                                         onChange={handleChangeFechaInicio}
@@ -687,7 +709,7 @@ export default function AcreditacionAlta() {
                                                         id='fechaFin'
                                                         name='fechaFin'
                                                         label="Fecha de Fin"
-                                                        inputFormat="DD/MM/YYYY"
+                                                        inputFormat="YYYY-MM-DD"
                                                         value={dateFF}
                                                         sx={{width:200, m: 1, display: 'block'}}
                                                         onChange={handleChangeFechaFin}
@@ -919,7 +941,7 @@ export default function AcreditacionAlta() {
                                                                 id='fechaInicioIns'
                                                                 name='fechaInicioIns'
                                                                 label="Fecha de Inicio"
-                                                                inputFormat="DD/MM/YYYY"
+                                                                inputFormat="YYYY-MM-DD"
                                                                 value={dateFIIns}
                                                                 sx={{width:300, p: 1, display: 'block'}}
                                                                 onChange={handleChangeFIIns}
@@ -942,7 +964,7 @@ export default function AcreditacionAlta() {
                                                                 id='fechaPresentacionIns'
                                                                 name='fechaPresentacionIns'
                                                                 label="Fecha de Presentación"
-                                                                inputFormat="DD/MM/YYYY"
+                                                                inputFormat="YYYY-MM-DD"
                                                                 value={dateFPIns}
                                                                 sx={{width:200, m: 1, display: 'block'}}
                                                                 onChange={handleChangeFPIns}
@@ -963,7 +985,7 @@ export default function AcreditacionAlta() {
                                                                 id='fechaLimiteIns'
                                                                 name='fechaLimiteIns'
                                                                 label="Fecha Límite"
-                                                                inputFormat="DD/MM/YYYY"
+                                                                inputFormat="YYYY-MM-DD"
                                                                 value={dateFLIns}
                                                                 sx={{width:200, m: 1, display: 'block'}}
                                                                 onChange={handleChangeFLIns}

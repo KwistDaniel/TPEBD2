@@ -4,9 +4,6 @@ const cors = require('cors');
 const fileupload = require('express-fileupload')
 
 const routes = require('./routes/routes');
-//no uso thunderclient yo para las pruebas
-//se runea con npm run dev
-//Quede en
 /**
  * El backend se corre con:
  * npm run dev
@@ -14,13 +11,14 @@ const routes = require('./routes/routes');
  * El frontend se corre desde /client con:
  * npm start
  *
- * El servidor http-server para archivos se corre con:
- * cd /server npm run build && node ./server
- *
  *
  * Se ha seguido el siguiente tutorial:
  * www.youtube.com/watch?v=_zGL_MU29zs
- * @Quede_en: 2:28:01
+ *
+ * instalaciones:
+ * npm install @mui/material @emotion/react @emotion/styled
+ * npm install @mui/material @mui/styled-engine-sc styled-components
+ * el IDE me instalo solo el resto de librerias a traves del package.json
  */
 const app = express();
 
@@ -59,7 +57,6 @@ app.use((err,req,res,next) => {
         message: err.message
     })
 });//middleware de errores
-
 
 
 app.listen(4000)
