@@ -267,6 +267,9 @@ export default function AcreditacionEdit() {
 
     /*Start Loader*/
     useEffect(() => {
+        console.log(ida)
+        console.log(idf)
+        console.log(idc)
         loadAcreditacion(ida)
     }, [])
 

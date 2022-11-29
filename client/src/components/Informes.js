@@ -120,6 +120,7 @@ export default function Informes(){
     const [showI2,setShowI2] = useState(false);
     const [showI31,setShowI31] = useState(false);
     const [showI32,setShowI32] = useState(false);
+    const [showI33,setShowI33] = useState(false);
     const [acreditacionI1, setAcreditacionI1] = useState([])
     const [acreditacionI2, setAcreditacionI2] = useState([])
     const [acreditacionI3, setAcreditacionI3] = useState([])
@@ -129,6 +130,8 @@ export default function Informes(){
         const responseF = await fetch('http://localhost:4000/facultades')
         const dataF = await responseF.json()
         var newListF =[]
+        var objf = {label: 'Todas', id: -1}
+        newListF.push(objf)
         for( var i=0; i<dataF.length;i++){
             var objf = {label: dataF[i].FNombre, id: dataF[i].id}
             newListF.push(objf)
@@ -167,6 +170,13 @@ export default function Informes(){
             else{
                 obj.Tipo = "Carrera en funcionamiento";
             }
+            const responseCar = await fetch('http://localhost:4000/carrera/' + obj.idC)
+            const dataCar = await responseCar.json()
+            obj.ANomCar = dataCar[0].CNombre;
+            obj.idF = dataCar[0].idF;
+            const responseFac = await fetch('http://localhost:4000/facultad/' + dataCar[0].idF)
+            const dataFac = await responseFac.json()
+            obj.ANomFac = dataFac[0].FNombre;
             newListA.push(obj)
         }
 
@@ -231,10 +241,80 @@ export default function Informes(){
                 )
                 obj.AFechaFin = ff;
             }
+            const responseCar = await fetch('http://localhost:4000/carrera/' + obj.idC)
+            const dataCar = await responseCar.json()
+            obj.ANomCar = dataCar[0].CNombre;
+
             newListA.push(obj)
             index++;
         }
         setAcreditacionI3(newListA)
+    }
+    const loadTodasAcreditacionesI3 = async () => {
+        const response = await fetch('http://localhost:4000/acreditaciones')
+        const dataA = await response.json()
+        var newList = []
+        for( var j=dataA.length-1;j>=0;j--){
+            var obj = {
+                id: j,
+                idA: dataA[j].id,
+                ANumeroExpediente: dataA[j].ANumeroExpediente,
+                AConvocatoria: dataA[j].AConvocatoria,
+                AFechaInicio: dataA[j].AFechaInicio,
+                AFechaFin: dataA[j].AFechaFin,
+                AEstado: dataA[j].AEstado,
+                ATipo: dataA[j].ATipo,
+                AObservacionProceso: dataA[j].AObservacionProceso,
+                AObservacionFinalizacion: dataA[j].AObservacionFinalizacion,
+                idC: dataA[j].idC,
+            }
+            if(obj.AEstado === 1){
+                obj.Estado = "Vigente";
+            }
+            else if(obj.AEstado === 2){
+                obj.Estado = "Finalizado";
+            }
+            else{
+                obj.Estado = "Falla";
+            }
+            if(obj.ATipo === 1){
+                obj.Tipo = "Carrera nueva";
+            }
+            else{
+                obj.Tipo = "Carrera en funcionamiento";
+            }
+
+            var fi = (
+                obj.AFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                obj.AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                obj.AFechaInicio.substring(8,10).toString()
+            )
+            obj.AFechaInicio = fi;
+
+            if(obj.AFechaFin !== null){
+                var ff = (
+                    obj.AFechaFin.substring(0,4).toString() +
+                    String.fromCharCode(47) +
+                    obj.AFechaFin.substring(5,7).toString() +
+                    String.fromCharCode(47) +
+                    obj.AFechaFin.substring(8,10).toString()
+                )
+                obj.AFechaFin = ff;
+            }
+
+            const responseC = await fetch('http://localhost:4000/carrera/' + obj.idC)
+            const dataC = await responseC.json()
+            obj.ANomCar = dataC[0].CNombre;
+            obj.idF = dataC[0].idF;
+            const responseF = await fetch('http://localhost:4000/facultad/' + dataC[0].idF)
+            const dataF = await responseF.json()
+            obj.ANomFac = dataF[0].FNombre;
+
+            newList.push(obj)
+        }
+        setAcreditacionI3(newList)
     }
 
     /*Handlers*/
@@ -260,10 +340,19 @@ export default function Informes(){
             setFacI3({label: "", id: 0})
             setAcreditacionI3([])
             setShowI32(false)
+            setShowI33(false)
+        }
+        else if(v.id === -1){
+            setFacI3(v)
+            setAcreditacionI3([])
+            setShowI32(false)
+            setShowI33(true)
+            loadTodasAcreditacionesI3()
         }
         else{
             setFacI3(v)
             setShowI32(true)
+            setShowI33(false)
             loadAcreditacionesI3(v.id)
         }
     };
@@ -330,7 +419,20 @@ export default function Informes(){
                 style={{color: 'black'}}
                 onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: facI3.id,idc: cellValues.idC}})}}
             >Ver</Button>)}, hide: true},
-        {field: 'idC', headerName: 'idC', flex: 1, hide: true}
+        {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
+        {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
+        {field: 'ANomFac', headerName: 'Facultad', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'ANomCar', headerName: 'Carrera', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
     ]
     const columnasI2 = [
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
@@ -393,9 +495,22 @@ export default function Informes(){
                 style={{color: 'black'}}
                 onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: facI3.id,idc: cellValues.idC}})}}
             >Ver</Button>)}, hide: true},
-        {field: 'idC', headerName: 'idC', flex: 1, hide: true}
+        {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
+        {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
+        {field: 'ANomFac', headerName: 'Facultad', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'ANomCar', headerName: 'Carrera', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
     ]
-    const columnasI3 = [
+    const columnasI31 = [
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
         {field: 'ANumeroExpediente', headerName: 'Nº de Expediente', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
@@ -456,7 +571,96 @@ export default function Informes(){
                 style={{color: 'black'}}
                 onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: facI3.id,idc: cellValues.idC}})}}
             >Ver</Button>)}, hide: true},
-        {field: 'idC', headerName: 'idC', flex: 1, hide: true}
+        {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
+        {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
+        {field: 'ANomFac', headerName: 'Facultad', flex: 1, hide: true, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'ANomCar', headerName: 'Carrera', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+    ]
+    const columnasI32 = [
+        {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
+        {field: 'ANumeroExpediente', headerName: 'Nº de Expediente', flex: 1, renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AConvocatoria', headerName: 'Convocatoria', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AEstado', headerName: 'AEstado', flex: 1, hide: true},
+        {field: 'ATipo', headerName: 'ATipo', flex: 1, hide: true, },
+        {field: 'Estado', headerName: 'Estado', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'Tipo', headerName: 'Tipo', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )
+        },
+        {field: 'AObservacionProceso', headerName: 'Obs. del Proceso', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'AObservacionFinalizacion', headerName: 'Obs. de la Finalización', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'Instancias', flex: 1, renderCell: (cellValues) => {return (<Button variant='text'
+                                                                                    style={{color: 'black'}}
+                                                                                    onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.id, idf: facI3.id,idc: cellValues.idC}})}}
+            >Ver</Button>)}, hide: true},
+        {field: 'Participantes', flex: 1, renderCell: (cellValues) => {return (<Button
+                variant='text'
+                style={{color: 'black'}}
+                onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.id, idf: facI3.id,idc: cellValues.idC}})}}
+            >Ver</Button>)}, hide: true},
+        {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
+        {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
+        {field: 'ANomFac', headerName: 'Facultad', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'ANomCar', headerName: 'Carrera', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
     ]
 
     useEffect(() => {
@@ -582,7 +786,26 @@ export default function Informes(){
                                                         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                                                         autoHeight
                                                         rows={acreditacionI3}
-                                                        columns={columnasI3}
+                                                        columns={columnasI31}
+                                                        pageSize={10}
+                                                        rowsPerPageOptions={[10]}
+                                                        pagination
+                                                        components={{Toolbar: CustomExport}}
+                                                        minHeight={750}
+                                                        rowMouseEnter
+                                                    />
+                                                </div>
+                                            </Box>
+                                        </Grow>
+                                        <Grow in={showI33} unmountOnExit>
+                                            <Box>
+                                                <div style={{height: '100%' }}>
+                                                    <DataGrid
+                                                        style={{backgroundColor: '#8ab8ac', color: 'black'}}
+                                                        localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+                                                        autoHeight
+                                                        rows={acreditacionI3}
+                                                        columns={columnasI32}
                                                         pageSize={10}
                                                         rowsPerPageOptions={[10]}
                                                         pagination
