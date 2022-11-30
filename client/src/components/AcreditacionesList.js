@@ -38,8 +38,8 @@ export default function AcreditacionesList(){
         const response = await fetch('http://localhost:4000/facultades')
         const data = await response.json()
         var newList =[]
-        var obj = {label: 'Todas', id: -1}
-        newList.push(obj)
+        var objft = {label: 'Todas', id: -1}
+        newList.push(objft)
         for( var i=0; i<data.length;i++){
             var obj = {label: data[i].FNombre, id: data[i].id}
             newList.push(obj)
@@ -62,8 +62,8 @@ export default function AcreditacionesList(){
             const response = await fetch('http://localhost:4000/carreras/' + idFac)
             const data = await response.json()
             var newList = []
-            var obj = {label: 'Todas', id: -1}
-            newList.push(obj)
+            var objct = {label: 'Todas', id: -1}
+            newList.push(objct)
             for( var i=0; i<data.length;i++){
                 var obj = {label: data[i].CNombre, id: data[i].id}
                 newList.push(obj)
@@ -239,21 +239,21 @@ export default function AcreditacionesList(){
                 obj.Tipo = "Carrera en funcionamiento";
             }
             var fi = (
-                dataA[i].AFechaInicio.substring(0,4).toString() +
+                dataA[i].AFechaInicio.substring(8,10).toString() +
                 String.fromCharCode(47) +
                 dataA[i].AFechaInicio.substring(5,7).toString() +
                 String.fromCharCode(47) +
-                dataA[i].AFechaInicio.substring(8,10).toString()
+                dataA[i].AFechaInicio.substring(0,4).toString()
             )
             obj.AFechaInicio = fi;
 
             if(dataA[i].AFechaFin !== null){
                 var ff = (
-                    dataA[i].AFechaFin.substring(0,4).toString() +
+                    dataA[i].AFechaFin.substring(8,10).toString() +
                     String.fromCharCode(47) +
                     dataA[i].AFechaFin.substring(5,7).toString() +
                     String.fromCharCode(47) +
-                    dataA[i].AFechaFin.substring(8,10).toString()
+                    dataA[i].AFechaFin.substring(0,4).toString()
                 )
                 obj.AFechaFin = ff;
             }
@@ -338,13 +338,13 @@ export default function AcreditacionesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -416,13 +416,13 @@ export default function AcreditacionesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -507,13 +507,13 @@ export default function AcreditacionesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -579,7 +579,7 @@ export default function AcreditacionesList(){
 
     useEffect(() => {
         loadFacultades()
-    }, [])
+    }, )
 
 
     return(

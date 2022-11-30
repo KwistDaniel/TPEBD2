@@ -330,28 +330,6 @@ export default function AcreditacionAlta() {
 
 
     /*Handlers*/
-    const handleChangeFF = (e,v) => {
-        /*if( v === null ){
-            setFac(null)
-            setCar(null)
-            setShowCarreras(false)
-            //setShowAcreditaciones(false)
-        }
-        else{
-            setFac(v)
-            setCar(null)
-            setShowCarreras(true)
-            loadCarreras(v.id)
-        }*/
-    };
-    const handleChangeCC = (e,v) => {
-        /*if( v === null ){
-            setCar(null)
-        }
-        else{
-            setCar(v)
-        }*/
-    };
     const handleChangeFechaInicio = (newValue) => {
         if(newValue === null){
             setDateFI(null)

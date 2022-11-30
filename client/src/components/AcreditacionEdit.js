@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import {LocalizationProvider, MobileDatePicker, DesktopDatePicker, esES} from "@mui/x-date-pickers";
+import {LocalizationProvider, DesktopDatePicker, esES} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
@@ -154,8 +154,15 @@ export default function AcreditacionEdit() {
         else{
             setEstadoAc(null);
         }
-
-        setDateFI(dayjs(data[0].AFechaInicio,"DD/MM/YYYY"))
+        var fi = (
+            data[0].AFechaInicio.substring(8,10).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(5,7).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(0,4).toString()
+        )
+        obj.fechaInicio = fi;
+        setDateFI(dayjs(obj.fechaInicio,"DD/MM/YYYY"))
 
 
         if(data[0].AFechaFin !== null){
@@ -178,7 +185,7 @@ export default function AcreditacionEdit() {
         }
         else{
             setDateFI(newValue);
-            setAcreditacion({...acreditacion, 'fechaInicio': (newValue).format('DD/MM/YYYY')});
+            setAcreditacion({...acreditacion, 'fechaInicio': (newValue).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFechaFin = (newValue) => {
@@ -188,7 +195,7 @@ export default function AcreditacionEdit() {
         }
         else{
             setDateFF(newValue);
-            setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('DD/MM/YYYY')});
+            setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('YYYY-MM-DD')});
         }
 
     };
@@ -222,12 +229,19 @@ export default function AcreditacionEdit() {
         /**
          * Cambio Acreditacion
          */
+        var ff;
+        if(acreditacion.fechaFin === ""){
+            ff = null
+        }
+        else{
+            ff = acreditacion.fechaFin
+        }
         var acrAlt = {
             id: ida,
             ANumeroExpediente: acreditacion.numeroExpediente,
             AConvocatoria: acreditacion.convocatoria,
             AFechaInicio: acreditacion.fechaInicio,
-            AFechaFin: acreditacion.fechaFin,
+            AFechaFin: ff,
             ATipo: acreditacion.tipo,
             AEstado: acreditacion.estado,
             AObservacionProceso: acreditacion.obsProceso,
@@ -267,11 +281,8 @@ export default function AcreditacionEdit() {
 
     /*Start Loader*/
     useEffect(() => {
-        console.log(ida)
-        console.log(idf)
-        console.log(idc)
         loadAcreditacion(ida)
-    }, [])
+    }, )
 
     return(
         <ThemeProvider theme={theme}>

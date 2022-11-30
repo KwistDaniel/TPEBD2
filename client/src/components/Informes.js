@@ -130,8 +130,8 @@ export default function Informes(){
         const responseF = await fetch('http://localhost:4000/facultades')
         const dataF = await responseF.json()
         var newListF =[]
-        var objf = {label: 'Todas', id: -1}
-        newListF.push(objf)
+        var objft = {label: 'Todas', id: -1}
+        newListF.push(objft)
         for( var i=0; i<dataF.length;i++){
             var objf = {label: dataF[i].FNombre, id: dataF[i].id}
             newListF.push(objf)
@@ -223,21 +223,21 @@ export default function Informes(){
                 obj.Tipo = "Carrera en funcionamiento";
             }
             var fi = (
-                dataA[i].AFechaInicio.substring(0,4).toString() +
+                dataA[i].AFechaInicio.substring(8,10).toString() +
                 String.fromCharCode(47) +
                 dataA[i].AFechaInicio.substring(5,7).toString() +
                 String.fromCharCode(47) +
-                dataA[i].AFechaInicio.substring(8,10).toString()
+                dataA[i].AFechaInicio.substring(0,4).toString()
             )
             obj.AFechaInicio = fi;
 
             if(dataA[i].AFechaFin !== null){
                 var ff = (
-                    dataA[i].AFechaFin.substring(0,4).toString() +
+                    dataA[i].AFechaFin.substring(8,10).toString() +
                     String.fromCharCode(47) +
                     dataA[i].AFechaFin.substring(5,7).toString() +
                     String.fromCharCode(47) +
-                    dataA[i].AFechaFin.substring(8,10).toString()
+                    dataA[i].AFechaFin.substring(0,4).toString()
                 )
                 obj.AFechaFin = ff;
             }
@@ -285,21 +285,21 @@ export default function Informes(){
             }
 
             var fi = (
-                obj.AFechaInicio.substring(0,4).toString() +
+                obj.AFechaInicio.substring(8,10).toString() +
                 String.fromCharCode(47) +
                 obj.AFechaInicio.substring(5,7).toString() +
                 String.fromCharCode(47) +
-                obj.AFechaInicio.substring(8,10).toString()
+                obj.AFechaInicio.substring(0,4).toString()
             )
             obj.AFechaInicio = fi;
 
             if(obj.AFechaFin !== null){
                 var ff = (
-                    obj.AFechaFin.substring(0,4).toString() +
+                    obj.AFechaFin.substring(8,10).toString() +
                     String.fromCharCode(47) +
                     obj.AFechaFin.substring(5,7).toString() +
                     String.fromCharCode(47) +
-                    obj.AFechaFin.substring(8,10).toString()
+                    obj.AFechaFin.substring(0,4).toString()
                 )
                 obj.AFechaFin = ff;
             }
@@ -371,13 +371,13 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -447,13 +447,13 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -523,13 +523,13 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -599,13 +599,13 @@ export default function Informes(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaInicio', headerName: 'Fecha de Inicio', maxWidth: 115, flex: 1,
+        {field: 'AFechaInicio', headerName: 'Inicio', maxWidth: 115, flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'AFechaFin', headerName: 'Fecha de Fin', maxWidth: 105 ,flex: 1,
+        {field: 'AFechaFin', headerName: 'Finalización', maxWidth: 105 ,flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
