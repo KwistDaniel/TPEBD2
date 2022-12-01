@@ -6,21 +6,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
-import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import {LocalizationProvider, MobileDatePicker, DesktopDatePicker, esES} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import dayjs from "dayjs";
-import {useEffect, useState} from "react";
-import {DataGrid} from "@mui/x-data-grid";
+import {useState} from "react";
 import IconButton from "@mui/material/IconButton";
-import Grow from "@mui/material/Grow";
-import esLocale from 'date-fns/locale/es'
-import Switch from '@mui/material/Switch'
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -139,7 +127,7 @@ export default function FacultadAlta() {
             <Container component="main" maxWidth="md" sx={{ mb: 4 }} style={{backgroundColor: 'lightblue'}}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }} style={{backgroundColor: '#7dcfb6'}}>
                     <Typography variant="h6" gutterBottom align="center">
-                        Agregar Facultad
+                        Agregar Unidad Académica
                     </Typography>
                     <React.Fragment>
                         <Box sx={{flexGrow: 1, flex: 0, padding: 0}}>

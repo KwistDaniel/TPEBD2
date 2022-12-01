@@ -4,11 +4,17 @@ import {Box} from "@mui/system";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
+import {DataGrid as MuiDataGrid} from '@mui/x-data-grid';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {esES} from '@mui/x-data-grid'
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
+import { styled } from '@mui/system';
+
+const DataGrid = styled(MuiDataGrid)(({ theme }) => ({
+    "& .MuiDataGrid-columnHeaders": { display: "none" },
+    "& .MuiDataGrid-virtualScroller": { marginTop: "0!important" },
+}));
 
 
 export default function FacultadesList(){
@@ -25,7 +31,7 @@ export default function FacultadesList(){
 
     const columnas = [
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
-        {field: 'FNombre', headerName: 'Nombre', flex: 1,
+        {field: 'FNombre', headerName: '', flex: 1, headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
@@ -43,8 +49,14 @@ export default function FacultadesList(){
         <Box sx={{flexGrow: 1, flex: 0, padding: 0}}>
             <Container>
                 <>
-                    <h1> Facultades </h1>
-                    <Box>
+                    <h1> Unidades Académicas </h1>
+                    <Box
+                        sx={{
+                            '& .super-app-theme--header': {
+                                backgroundColor: '#688A81',
+                            },
+                        }}
+                    >
                         <div style={{height: '100%' }}>
                             <DataGrid
                                 style={{backgroundColor: '#8ab8ac', color: 'black'}}
@@ -52,7 +64,20 @@ export default function FacultadesList(){
                                 autoHeight
                                 rows={facultades}
                                 columns={columnas}
-                                pageSize={5}
+                                components={{
+                                    Header: () => null,
+                                    ColumnHeaderFilterIconButton: () => null,
+                                    ColumnsPanel: () => null,
+                                    ColumnFilteredIcon: () => null,
+                                    ColumnMenu: () => null,
+                                    ColumnMenuIcon: () => null,
+                                    ColumnResizeIcon: () => null,
+                                    ColumnSelectorIcon: () => null,
+                                    ColumnSortedAscendingIcon: () => null,
+                                    ColumnSortedDescendingIcon: () => null,
+                                    ColumnUnsortedIcon: () => null,
+                                }}
+                                pageSize={25}
                                 rowsPerPageOptions={[5]}
                                 minHeight={750}
                             />

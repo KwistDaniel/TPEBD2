@@ -33,6 +33,7 @@ import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Tooltip from "@mui/material/Tooltip";
 
 const theme = createTheme({
         palette: {
@@ -188,22 +189,87 @@ export default function AcreditacionAlta() {
     /*Headers*/
     const columnasPDisp = [
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
-        {field: 'PNombre', headerName: 'Nombre', flex: 1},
-        {field: 'PApellido', headerName: 'Apellido', flex: 1},
-        {field: 'PNumeroDocumento', headerName: 'Documento', flex: 1, minWidth: 90},
-        {field: 'PSexo', headerName: 'Sexo', flex: 1, width: 95},
-        {field: 'PMail', headerName: 'Mail', flex: 1},
-        {field: 'PNumeroTelefono', headerName: 'Teléfono', minWidth: 110}
+        {field: 'PNombre', headerName: 'Nombre', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PApellido', headerName: 'Apellido', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PNumeroDocumento', headerName: 'Documento', flex: 1, minWidth: 90, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PSexo', headerName: 'Sexo', flex: 1, width: 95, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PMail', headerName: 'Mail', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PNumeroTelefono', headerName: 'Teléfono', minWidth: 110, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
     ]
     const columnasPSel = [
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
-        {field: 'PNombre', headerName: 'Nombre', flex: 1},
-        {field: 'PApellido', headerName: 'Apellido', flex: 1},
-        {field: 'PNumeroDocumento', headerName: 'Documento', flex: 1, minWidth: 90},
-        {field: 'PSexo', headerName: 'Sexo', flex: 1, width: 95},
-        {field: 'PMail', headerName: 'Mail', flex: 1},
-        {field: 'PNumeroTelefono', headerName: 'Teléfono', minWidth: 110},
-        {field: 'PRol', headerName: 'Rol', flex: 1}
+        {field: 'PNombre', headerName: 'Nombre', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PApellido', headerName: 'Apellido', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PNumeroDocumento', headerName: 'Documento', flex: 1, minWidth: 90, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PSexo', headerName: 'Sexo', flex: 1, width: 95, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PMail', headerName: 'Mail', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PNumeroTelefono', headerName: 'Teléfono', minWidth: 110, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'PRol', headerName: 'Rol', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
     ]
 
 

@@ -73,18 +73,6 @@ export default function Carreras(){
     }
 
     const columnas = [
-        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/carreras/delete' , {state: {idf: fac.id, idc: cellValues.id}})}}
-                    color="inherit"
-                ><DeleteIcon /></Button>)}},
-        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/carreras/edit' , {state: {idf: fac.id, idc: cellValues.id}})}}
-                    color="inherit"
-                ><HistoryEduIcon /></Button>)}},
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
         {field: 'CNombre', headerName: 'Nombre',flex: 1,
             renderCell: (params) => (
@@ -110,6 +98,18 @@ export default function Carreras(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/carreras/edit' , {state: {idf: fac.id, idc: cellValues.id}})}}
+                    color="inherit"
+                ><HistoryEduIcon /></Button>)}},
+        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/carreras/delete' , {state: {idf: fac.id, idc: cellValues.id}})}}
+                    color="inherit"
+                ><DeleteIcon /></Button>)}},
     ]
 
 

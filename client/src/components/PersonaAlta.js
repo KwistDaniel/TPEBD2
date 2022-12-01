@@ -254,7 +254,7 @@ export default function PersonaAlta() {
                                                     variant='filled'
                                                     id='PNumeroDocumento'
                                                     name='PNumeroDocumento'
-                                                    label='Numero de Documento'
+                                                    label='Número de Documento'
                                                     fullWidth
                                                     onChange={handleChangePersona}
                                                     inputProps={{style: {color: 'black'}}}
@@ -280,7 +280,7 @@ export default function PersonaAlta() {
                                                     variant='filled'
                                                     id='PNumeroTelefono'
                                                     name='PNumeroTelefono'
-                                                    label='Numero de Telefono'
+                                                    label='Número de Teléfono'
                                                     fullWidth
                                                     onChange={handleChangePersona}
                                                     inputProps={{style: {color: 'black'}}}

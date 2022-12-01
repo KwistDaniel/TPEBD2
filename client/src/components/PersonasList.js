@@ -56,18 +56,6 @@ export default function PersonasList(){
 
 
     const columnas = [
-        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/personas/delete' , {state: {idp: cellValues.id}})}}
-                    color="inherit"
-                ><DeleteIcon /></Button>)}},
-        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/personas/edit' , {state: {idp: cellValues.id}})}}
-                    color="inherit"
-                ><HistoryEduIcon /></Button>)}},
         {field: 'id', headerName: 'Codigo', hide: true, flex: 1},
         {field: 'PNombre', headerName: 'Nombre', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
@@ -82,7 +70,7 @@ export default function PersonasList(){
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>)},
-        {field: 'PNumeroDocumento', headerName: 'Numero de Documento', flex: 1, renderCell: (params) => (
+        {field: 'PNumeroDocumento', headerName: 'Número de Documento', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>)},
@@ -95,10 +83,22 @@ export default function PersonasList(){
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>)},
-        {field: 'PNumeroTelefono', headerName: 'Telefono', flex: 1, renderCell: (params) => (
+        {field: 'PNumeroTelefono', headerName: 'Teléfono', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>)},
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/personas/edit' , {state: {idp: cellValues.id}})}}
+                    color="inherit"
+                ><HistoryEduIcon /></Button>)}},
+        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/personas/delete' , {state: {idp: cellValues.id}})}}
+                    color="inherit"
+                ><DeleteIcon /></Button>)}},
     ]
 
 

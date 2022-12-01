@@ -93,18 +93,6 @@ export default function InstanciaList(){
     const navigate = useNavigate()
 
     const columnas = [
-        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/instancias/delete' , {state: {ida: ida, idf: idf, idc: idc, idi: cellValues.id}})}}
-                    color="inherit"
-                ><DeleteIcon /></Button>)}},
-        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
-            renderCell: (cellValues) => {return (
-                <Button
-                    onClick={() => {navigate('/instancias/edit' , {state: {ida: ida, idf: idf, idc: idc, idi: cellValues.id}})}}
-                    color="inherit"
-                ><HistoryEduIcon /></Button>)}},
         {field: 'id', headerName: 'Codigo', flex: 1, hide: true},
         {field: 'idTI', headerName: 'Tipo', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
@@ -134,7 +122,19 @@ export default function InstanciaList(){
         {field: 'document', headerName: 'Documentacion', flex: 1, renderCell: (cellValues) => {return (
                 <Button
                     color="inherit"
-                >Documentacion</Button>)}}
+                >Documentacion</Button>)}},
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/instancias/edit' , {state: {ida: ida, idf: idf, idc: idc, idi: cellValues.id}})}}
+                    color="inherit"
+                ><HistoryEduIcon /></Button>)}},
+        {field: 'delete', headerName: 'Borrar', flex:1, maxWidth: 55,
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/instancias/delete' , {state: {ida: ida, idf: idf, idc: idc, idi: cellValues.id}})}}
+                    color="inherit"
+                ><DeleteIcon /></Button>)}},
     ]
 
 

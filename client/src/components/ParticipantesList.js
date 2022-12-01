@@ -5,10 +5,7 @@ import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {esES} from '@mui/x-data-grid'
-import DeleteIcon from "@mui/icons-material/Delete";
-import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import {useLocation} from "react-router";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -133,7 +130,7 @@ export default function ParticipantesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'PNumeroDocumento', headerName: 'Numero de Documento', flex: 1, renderCell: (params) => (
+        {field: 'PNumeroDocumento', headerName: 'Número de Documento', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
@@ -154,7 +151,7 @@ export default function ParticipantesList(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'PNumeroTelefono', headerName: 'Telefono', flex: 1, renderCell: (params) => (
+        {field: 'PNumeroTelefono', headerName: 'Teléfono', flex: 1, renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
