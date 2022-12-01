@@ -161,12 +161,34 @@ export default function AcreditacionEdit() {
             String.fromCharCode(47) +
             data[0].AFechaInicio.substring(0,4).toString()
         )
+        var fi2 = (
+            data[0].AFechaInicio.substring(0,4).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(5,7).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(8,10).toString()
+        )
         obj.fechaInicio = fi;
-        setDateFI(dayjs(obj.fechaInicio,"DD/MM/YYYY"))
+        setDateFI(dayjs(fi2,"YYYY-MM-DD"))
 
 
         if(data[0].AFechaFin !== null){
-            setDateFF(dayjs(data[0].AFechaFin,"DD/MM/YYYY"))
+            var ff = (
+                data[0].AFechaInicio.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(0,4).toString()
+            )
+            var ff2 = (
+                data[0].AFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(8,10).toString()
+            )
+            obj.fechaFin = ff;
+            setDateFF(dayjs(ff2,"YYYY-MM-DD"))
         }
         else{
             setDateFF(null)
@@ -197,7 +219,6 @@ export default function AcreditacionEdit() {
             setDateFF(newValue);
             setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('YYYY-MM-DD')});
         }
-
     };
     const handleChangeAc = e =>{
         setAcreditacion({...acreditacion, [e.target.name]: e.target.value});
@@ -282,7 +303,7 @@ export default function AcreditacionEdit() {
     /*Start Loader*/
     useEffect(() => {
         loadAcreditacion(ida)
-    }, )
+    }, [ida])
 
     return(
         <ThemeProvider theme={theme}>
@@ -331,7 +352,6 @@ export default function AcreditacionEdit() {
                                                 <LocalizationProvider
                                                     dateAdapter={AdapterDayjs}
                                                     adapterLocale={esLocale}
-                                                    localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
                                                 >
                                                     <DesktopDatePicker
                                                         disableFuture
@@ -339,7 +359,7 @@ export default function AcreditacionEdit() {
                                                         id='fechaInicio'
                                                         name='fechaInicio'
                                                         label="Fecha de Inicio"
-                                                        inputFormat="DD/MM/YYYY"
+                                                        inputFormat="YYYY-MM-DD"
                                                         value={dateFI}
                                                         sx={{width:300, p: 1, display: 'block'}}
                                                         onChange={handleChangeFechaInicio}
@@ -364,7 +384,7 @@ export default function AcreditacionEdit() {
                                                         id='fechaFin'
                                                         name='fechaFin'
                                                         label="Fecha de Fin"
-                                                        inputFormat="DD/MM/YYYY"
+                                                        inputFormat="YYYY-MM-DD"
                                                         value={dateFF}
                                                         sx={{width:200, m: 1, display: 'block'}}
                                                         onChange={handleChangeFechaFin}

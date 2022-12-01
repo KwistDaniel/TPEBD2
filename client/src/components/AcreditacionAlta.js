@@ -87,12 +87,6 @@ BootstrapDialogTitle.propTypes = {
 };
 
 
-const blue = {
-    500: '#8a96b8',
-    600: '#8AADB8',
-    700: '#344145',
-};
-
 const green = {
     500: '#329932',
     600: '#198C19',
@@ -143,8 +137,6 @@ export default function AcreditacionAlta() {
 
 
     /*Datos*/
-    const [facultades,setFacultades] = useState(null);
-    const [carreras,setCarreras] = useState(null);
     const [fac,setFac] = useState("");
     const [car,setCar] = useState("");
     const [dateFI,setDateFI] = React.useState(dayjs);
@@ -217,7 +209,6 @@ export default function AcreditacionAlta() {
 
 
     /*Shows*/
-    const [showCarreras,setShowCarreras] = useState(false);
     const [showPersonasDisp,setShowPersonasDisp] = useState(false);
     const [showPersonasSel,setShowPersonasSel] = useState(false);
     const [showFormalizacion,setShowFormalizacion] = useState(false);
@@ -230,14 +221,12 @@ export default function AcreditacionAlta() {
         const data = await response.json()
         var obj = {label: data[0].FNombre, id: data[0].id}
         setFac(obj)
-        setFacultades(obj)
     }
     async function loadCarrera(idc){
         const response = await fetch('http://localhost:4000/carrera/' + idc)
         const data = await response.json()
         var obj = {label: data[0].CNombre, id: data[0].id}
         setCar(obj)
-        setCarreras(obj)
     }
     async function loadPersonas(){
         const response = await fetch('http://localhost:4000/personas')
@@ -349,7 +338,6 @@ export default function AcreditacionAlta() {
             setDateFF(newValue);
             setAcreditacion({...acreditacion, 'fechaFin': (newValue).format('YYYY-MM-DD')});
         }
-
     };
     const handleChangeAc = e =>{
         setAcreditacion({...acreditacion, [e.target.name]: e.target.value});
@@ -590,7 +578,7 @@ export default function AcreditacionAlta() {
         loadCarrera(idc)
         loadPersonas()
         loadRoles()
-    }, [])
+    }, [idf,idc])
 
     return(
         <ThemeProvider theme={theme}>

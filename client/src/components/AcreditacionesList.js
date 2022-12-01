@@ -34,7 +34,7 @@ export default function AcreditacionesList(){
     const [acreditacion, setAcreditacion] = useState([])
 
     /*Loaders*/
-    async function loadFacultades(){
+    async function loadFacultades(idf){
         const response = await fetch('http://localhost:4000/facultades')
         const data = await response.json()
         var newList =[]
@@ -52,6 +52,7 @@ export default function AcreditacionesList(){
             setShowCarreras(true)
         }
     }
+
     async function loadCarreras(idFac){
         if(idFac === null){
             setCarreras([])
@@ -113,21 +114,21 @@ export default function AcreditacionesList(){
             }
 
             var fi = (
-                obj.AFechaInicio.substring(0,4).toString() +
+                obj.AFechaInicio.substring(8,10).toString() +
                 String.fromCharCode(47) +
                 obj.AFechaInicio.substring(5,7).toString() +
                 String.fromCharCode(47) +
-                obj.AFechaInicio.substring(8,10).toString()
+                obj.AFechaInicio.substring(0,4).toString()
             )
             obj.AFechaInicio = fi;
 
             if(obj.AFechaFin !== null){
                 var ff = (
-                    obj.AFechaFin.substring(0,4).toString() +
+                    obj.AFechaFin.substring(8,10).toString() +
                     String.fromCharCode(47) +
                     obj.AFechaFin.substring(5,7).toString() +
                     String.fromCharCode(47) +
-                    obj.AFechaFin.substring(8,10).toString()
+                    obj.AFechaFin.substring(0,4).toString()
                 )
                 obj.AFechaFin = ff;
             }
@@ -171,21 +172,21 @@ export default function AcreditacionesList(){
             }
 
             var fi = (
-                obj.AFechaInicio.substring(0,4).toString() +
+                obj.AFechaInicio.substring(8,10).toString() +
                 String.fromCharCode(47) +
                 obj.AFechaInicio.substring(5,7).toString() +
                 String.fromCharCode(47) +
-                obj.AFechaInicio.substring(8,10).toString()
+                obj.AFechaInicio.substring(0,4).toString()
             )
             obj.AFechaInicio = fi;
 
             if(obj.AFechaFin !== null){
                 var ff = (
-                    obj.AFechaFin.substring(0,4).toString() +
+                    obj.AFechaFin.substring(8,10).toString() +
                     String.fromCharCode(47) +
                     obj.AFechaFin.substring(5,7).toString() +
                     String.fromCharCode(47) +
-                    obj.AFechaFin.substring(8,10).toString()
+                    obj.AFechaFin.substring(0,4).toString()
                 )
                 obj.AFechaFin = ff;
             }
@@ -578,8 +579,8 @@ export default function AcreditacionesList(){
     ]
 
     useEffect(() => {
-        loadFacultades()
-    }, )
+        loadFacultades(idf)
+    }, [idf])
 
 
     return(
