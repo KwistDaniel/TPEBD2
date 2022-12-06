@@ -181,7 +181,7 @@ export default function Informes(){
         }
 
         var ac1 = newListA.filter(ac => ac.AEstado === 1)
-        var ac2 = newListA.filter(ac => ac.AFechaFin === '')
+        var ac2 = newListA.filter(ac => ac.AEstado === 2)
 
         setAcreditacionI1(ac1)
         setAcreditacionI2(ac2)

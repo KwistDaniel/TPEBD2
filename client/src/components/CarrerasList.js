@@ -86,7 +86,7 @@ export default function Carreras(){
                     <span >{params.value}</span>
                 </Tooltip>
             )},
-        {field: 'CObservacion', headerName: 'Observacion', flex: 1,
+        {field: 'CObservacion', headerName: 'Observación', flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>

@@ -195,11 +195,11 @@ export default function InstanciaList(){
                                 autoHeight
                                 rows={instancias}
                                 columns={columnas}
-                                pageSize={5}
+                                pageSize={10}
                                 rowsPerPageOptions={[5]}
                                 initialState={{
                                     sorting:{
-                                        sortModel: [{field: 'id', sort: 'asc'}],
+                                        sortModel: [{field: 'id', sort: 'desc'}],
                                     },
                                 }}
                                 minHeight={750}

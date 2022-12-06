@@ -1,15 +1,19 @@
 import {Button, Container} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
-import {Box} from "@mui/system";
+import {Box, styled} from "@mui/system";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {esES} from '@mui/x-data-grid'
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
+import {DataGrid as MuiDataGrid} from "@mui/x-data-grid/DataGrid/DataGrid";
 
+const DataGrid = styled(MuiDataGrid)(({ theme }) => ({
+    "& .MuiDataGrid-columnHeaders": { display: "none" },
+    "& .MuiDataGrid-virtualScroller": { marginTop: "0!important" },
+}));
 
 export default function TipInsList(){
     const [tiposInstancia,setTiposInstancia] = useState([]);
@@ -52,7 +56,7 @@ export default function TipInsList(){
                                 autoHeight
                                 rows={tiposInstancia}
                                 columns={columnas}
-                                pageSize={5}
+                                pageSize={10}
                                 rowsPerPageOptions={[5]}
                                 minHeight={750}
                             />
