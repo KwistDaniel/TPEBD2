@@ -68,6 +68,12 @@ export default function Carreras(){
             else if (data[i].CTipo === "P"){
                 data[i].CTipo = "Posgrado";
             }
+            if(data[i].CModalidad === "P") {
+                data[i].CModalidad = "Presencial";
+            }
+            else if (data[i].CModalidad === "D"){
+                data[i].CModalidad = "A distancia";
+            }
         }
         setCarreras(data)
     }
@@ -93,6 +99,12 @@ export default function Carreras(){
                 </Tooltip>
             )},
         {field: 'CDepartamento', headerName: 'Departamento', flex: 1,
+            renderCell: (params) => (
+                <Tooltip title={params.value} >
+                    <span >{params.value}</span>
+                </Tooltip>
+            )},
+        {field: 'CModalidad', headerName: 'Modalidad', flex: 1,
             renderCell: (params) => (
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>

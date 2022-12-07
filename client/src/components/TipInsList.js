@@ -9,6 +9,8 @@ import {esES} from '@mui/x-data-grid'
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import {DataGrid as MuiDataGrid} from "@mui/x-data-grid/DataGrid/DataGrid";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const DataGrid = styled(MuiDataGrid)(({ theme }) => ({
     "& .MuiDataGrid-columnHeaders": { display: "none" },
@@ -34,7 +36,19 @@ export default function TipInsList(){
                 <Tooltip title={params.value} >
                     <span >{params.value}</span>
                 </Tooltip>
-            )}
+            )},
+        {field: 'edit', headerName: 'Editar', flex:1, maxWidth: 70, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/tipins/edit' , {state: {idti: cellValues.row.id}})}}
+                    color="inherit"
+                ><HistoryEduIcon /></Button>)}},
+        {field: 'delete', headerName: 'Borrar', flex:1, hide: true, maxWidth: 55, headerAlign: 'center', headerClassName: 'super-app-theme--header',
+            renderCell: (cellValues) => {return (
+                <Button
+                    onClick={() => {navigate('/tipins/delete' , {state: {idti: cellValues.row.id}})}}
+                    color="inherit"
+                ><DeleteIcon /></Button>)}},
     ]
 
 

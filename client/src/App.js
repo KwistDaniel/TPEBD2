@@ -28,6 +28,8 @@ import InstanciaAlta from "./components/InstanciaAlta";
 import CarreraEdit from "./components/CarreraEdit";
 import CarreraBorrar from "./components/CarreraBorrar";
 import Informes from "./components/Informes";
+import TipInsEdit from "./components/TipInsEdit";
+import TipInsDelete from "./components/TipInsDelete";
 
 /**
  * Nota al lector
@@ -69,6 +71,8 @@ export default function App(){
                   <Route path='/instancias/new' element={<InstanciaAlta />} />
                   <Route path='/tipins' element={<TipInsList />} />
                   <Route path='/tipins/new' element={<TipInsAlta />} />
+                  <Route path='/tipins/edit' element={<TipInsEdit />} />
+                  <Route path='/tipins/delete' element={<TipInsDelete />} />
                   <Route path='/roles' element={<RolesList />} />
                   <Route path='/roles/new' element={<RolesAlta />} />
                   <Route path='/tasks/new' element={<TaskForm />} />

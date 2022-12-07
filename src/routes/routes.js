@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const {getAcreditaciones, getAcreditacionesPorFacultad, getAcreditacionesPorCarrera, getAcreditacionesPorId, postAcreditacion,
-    putAcreditacion, getInstancias, getInstancia, putInstancia, getInstanciasPorId, postInstancia,
-    getFacultades, getFacultad, postFacultad, getCarreras, getCarrera, getCarrerasPorFac, postCarrera,
-    putCarrera,
-    getPersonas, getPersona, postPersonas, putPersonas, getParticipa, getParticipaId, getParticipaAc,
-    postParticipa, putParticipaAct, getRoles, getRol, postRoles, getTipoInstancia, postTipoInstancia,
+const {getAcreditaciones, getAcreditacionesPorFacultad, getAcreditacionesPorCarrera, getAcreditacionesPorId,
+    postAcreditacion, putAcreditacion, getInstancias, getInstancia, putInstancia, getInstanciasPorId,
+    postInstancia, getFacultades, getFacultad, postFacultad, getCarreras, getCarrera, getCarrerasPorFac,
+    postCarrera, putCarrera, getPersonas, getPersona, postPersonas, putPersonas, getParticipa,
+    getParticipaId, getParticipaAc, postParticipa, putParticipaAct, getRoles, getRol, postRoles,
+    getTipoInstancia, getTipoInstanciaId, postTipoInstancia, putTipoInstancia,
     uploadFiles} = require('../controllers/acreditaciones.controller')
 const pool = require('../db');
 
@@ -74,7 +74,11 @@ router.post('/roles', postRoles)
 
 router.get('/tipoInstancia', getTipoInstancia)
 
+router.get('/tipoInstancia/:id', getTipoInstanciaId)
+
 router.post('/tipoInstancia', postTipoInstancia)
+
+router.put('/tipoInstancia', putTipoInstancia)
 
 router.post('/upload', uploadFiles)
 

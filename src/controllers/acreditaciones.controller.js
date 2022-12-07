@@ -240,15 +240,15 @@ const getCarrerasPorFac = async(req,res,next) => {
 }
 
 const postCarrera = async (req, res,next) => {
-    const {CNombre, CTipo, CObservacion, CDepartamento, idF} = req.body
+    const {CNombre, CTipo, CObservacion, CDepartamento, CModalidad, idF} = req.body
     try{
         const result = await pool.query('INSERT INTO ' +
             '"Carrera" ' +
-            '(id, "CNombre", "CTipo", "CObservacion", "CDepartamento", "idF", status) ' +
+            '(id, "CNombre", "CTipo", "CObservacion", "CDepartamento", "CModalidad", "idF", status) ' +
             'VALUES ' +
-            '(DEFAULT, $1, $2, $3, $4, $5, TRUE) ' +
+            '(DEFAULT, $1, $2, $3, $4, $5, $6, TRUE) ' +
             'RETURNING *',
-            [CNombre, CTipo, CObservacion, CDepartamento, idF]);
+            [CNombre, CTipo, CObservacion, CDepartamento, CModalidad, idF]);
         res.json(result.rows[0])
     }
     catch(error){
@@ -448,6 +448,17 @@ const getTipoInstancia = async(req,res,next) => {
     }
 }
 
+const getTipoInstanciaId = async(req,res,next) => {
+    const {id} = req.params;
+    try{
+        const result = await pool.query('SELECT * FROM "TipoInstancia" WHERE ((status = TRUE) AND (id = $1))',[id]);
+        return res.json(result.rows);
+    }
+    catch (error){
+        next(error);
+    }
+}
+
 const postTipoInstancia = async (req, res,next) => {
     const {TITipo} = req.body
     try{
@@ -458,6 +469,23 @@ const postTipoInstancia = async (req, res,next) => {
             '(DEFAULT, $1, TRUE) ' +
             'RETURNING *',
             [TITipo]);
+        res.json(result.rows[0])
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+const putTipoInstancia = async (req,res,next) => {
+    const {id, TITipo, status} = req.body
+    console.log(req.body)
+    try{
+        const result = await pool.query('UPDATE "TipoInstancia" SET ' +
+            '"TITipo" = $2, ' +
+            'status = $3 ' +
+            ' WHERE (id = $1) ' +
+            'RETURNING *',
+            [id, TITipo, status]);
         res.json(result.rows[0])
     }
     catch(error){
@@ -527,6 +555,8 @@ module.exports = {
     getRol,
     postRoles,
     getTipoInstancia,
+    getTipoInstanciaId,
     postTipoInstancia,
+    putTipoInstancia,
     uploadFiles
 }

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,6 +18,8 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import {useNavigate} from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import dayjs from "dayjs";
+import {useLocation} from "react-router";
 
 const theme = createTheme({
     palette: {
@@ -74,6 +76,8 @@ BootstrapDialogTitle.propTypes = {
 
 
 export default function FacultadAlta() {
+    const {state} = useLocation()
+    const {idti} = state;
     const navigate = useNavigate()
     const [tiTipo,setTiTipo] = useState({
         TITipo: ""
@@ -83,7 +87,7 @@ export default function FacultadAlta() {
     const [error,setError] = React.useState(false);
 
 
-    const handleChangeNombre = (e) => {
+    const handleChangeTI = (e) => {
         setTiTipo({
             ...tiTipo, [e.target.name]: e.target.value
         });
@@ -99,24 +103,41 @@ export default function FacultadAlta() {
         navigate('/tipins');
     }
 
+    async function loadTipoInstancia(idti){
+        const response = await fetch('http://localhost:4000/tipoinstancia/' + idti)
+        const data = await response.json()
+        var obj = {
+            TITipo: data[0].TITipo,
+        }
+        setTiTipo(obj)
+    }
 
-    const handleAlta = async () =>{
-        var TIAlt = {
+
+    const handleEdit = async () =>{
+        var obj = {
+            id: idti,
             TITipo: tiTipo.TITipo,
+            status: false
         }
         const res = await fetch('http://localhost:4000/tipoInstancia', {
-            method: 'POST',
-            body: JSON.stringify(TIAlt),
+            method: 'PUT',
+            body: JSON.stringify(obj),
             headers: {'Content-Type': 'application/json'},
         })
         const data = await res.json();
-        var idA = data.id;
-        if(idA === null || idA === undefined){
-            console.log('Error de alta')
+        var idTI = data.id;
+        if(idTI === null || idTI === undefined){
+            console.log('Error de edit')
             setError(true);
         }
         handleClickOpen()
     }
+
+
+
+    useEffect(() => {
+        loadTipoInstancia(idti)
+    }, [])
 
 
 
@@ -134,15 +155,16 @@ export default function FacultadAlta() {
                                     <Box>
                                         <Grid item xs={12}>
                                             <TextField
+                                                disabled
                                                 value={tiTipo.TITipo}
                                                 variant='filled'
                                                 id='TITipo'
                                                 name='TITipo'
                                                 label='Tipo de Instancia'
                                                 fullWidth
-                                                onChange={handleChangeNombre}
+                                                onChange={handleChangeTI}
                                                 inputProps={{style: {color: 'black'}}}
-                                                InputLabelProps={{style: {color: 'black'}}}
+                                                InputLabelProps={{shrink: true, style: {color: 'black'}}}
                                             />
                                         </Grid>
                                         <Box>
@@ -161,10 +183,10 @@ export default function FacultadAlta() {
                                                 <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end" >
                                                     <Button
                                                         variant='contained'
-                                                        style={{marginRight: '.5rem',marginLeft: '.5rem', backgroundColor: 'green', color: 'white'}}
-                                                        onClick={handleAlta}
+                                                        style={{marginRight: '.5rem',marginLeft: '.5rem', backgroundColor: '#8aadb8', color: 'black'}}
+                                                        onClick={handleEdit}
                                                     >
-                                                        Agregar
+                                                        Borrar
                                                     </Button>
                                                 </Grid>
                                             </Grid>
@@ -187,7 +209,7 @@ export default function FacultadAlta() {
                             Error
                         </BootstrapDialogTitle>
                         <DialogContent>
-                            No se pudo dar de alta
+                            No se pudo borrar
                         </DialogContent>
                         <DialogActions>
                             <Button color="error" autoFocus onClick={handleClosePopUp}>
@@ -202,10 +224,10 @@ export default function FacultadAlta() {
                         open={popUp}
                     >
                         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                            Exito
+                            Éxito
                         </BootstrapDialogTitle>
                         <DialogContent>
-                            Se dio de alta el tipo de instancia
+                            Se borró correctamente el tipo de instancia
                         </DialogContent>
                         <DialogActions>
                             <Button color="success" autoFocus onClick={handleClosePopUp}>

@@ -8,19 +8,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import {LocalizationProvider, MobileDatePicker, DesktopDatePicker, esES} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import dayjs from "dayjs";
 import {useEffect, useState} from "react";
-import {DataGrid} from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
-import Grow from "@mui/material/Grow";
-import esLocale from 'date-fns/locale/es'
-import Switch from '@mui/material/Switch'
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -96,16 +85,22 @@ export default function CarreraAlta() {
         CTipo: "",
         CObservacion: "",
         CDepartamento: "",
+        CModalidad: "",
         idF: ""
     });
     const tipo = [
         {label: 'Grado', id: 'G'},
         {label: 'Posgrado', id: 'P'},
     ]
+    const modalidad = [
+        {label: 'Presencial', id: 'P'},
+        {label: 'A distancia', id: 'D'},
+    ]
     const [fac,setFac] = useState({label: '', id: 0});
     const [popUp,setPopUp] = React.useState(false);
     const [error,setError] = React.useState(false);
     const [tipoC, setTipo] = useState(null)
+    const [modalidadC, setModalidad] = useState(null)
     const handleChangeFF = (e,v) => {
         if( v === null ){
             setFac(null)
@@ -125,6 +120,16 @@ export default function CarreraAlta() {
         else{
             setTipo(v)
             setCarrera({...carrera, 'CTipo': v.id});
+        }
+    };
+    const handleChangeModalidad = (e,v) => {
+        if( v === null ){
+            setModalidad(null)
+            setCarrera({...carrera, 'CModalidad': null});
+        }
+        else{
+            setModalidad(v)
+            setCarrera({...carrera, 'CModalidad': v.id});
         }
     };
     /*PopUp*/
@@ -153,6 +158,7 @@ export default function CarreraAlta() {
             CTipo: tipoC.id,
             CObservacion: carrera.CObservacion,
             CDepartamento: carrera.CDepartamento,
+            CModalidad: modalidadC.id,
             idF: fac.id,
         }
         const res = await fetch('http://localhost:4000/carreras', {
@@ -214,7 +220,7 @@ export default function CarreraAlta() {
                                                     InputLabelProps={{style: {color: 'black'}}}
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={12} sm={6}>
                                                 <Autocomplete
                                                     required
                                                     disablePortal
@@ -228,6 +234,21 @@ export default function CarreraAlta() {
                                                             required
                                                             {...params}
                                                             label="Tipo"/>}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Autocomplete
+                                                    required
+                                                    disablePortal
+                                                    id="CModalidad"
+                                                    options={modalidad}
+                                                    value={modalidadC}
+                                                    sx={{width:200, p: 1}}
+                                                    onChange={handleChangeModalidad}
+                                                    renderInput={(params) =>
+                                                        <TextField
+                                                            {...params}
+                                                            label="Modalidad"/>}
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
