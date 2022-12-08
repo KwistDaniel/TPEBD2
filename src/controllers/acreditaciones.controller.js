@@ -493,6 +493,17 @@ const putTipoInstancia = async (req,res,next) => {
     }
 }
 
+const getUniversidades = async(req,res,next) => {
+    try{
+        const result = await pool.query('SELECT * FROM "Universidad" ORDER BY id ASC');
+        console.log(result.rows)
+        return res.json(result.rows);
+    }
+    catch (error){
+        next(error);
+    }
+}
+
 const uploadFiles = (req,res,next) => {
 
     /*console.log('hola')
@@ -558,5 +569,6 @@ module.exports = {
     getTipoInstanciaId,
     postTipoInstancia,
     putTipoInstancia,
+    getUniversidades,
     uploadFiles
 }

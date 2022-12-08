@@ -4,7 +4,7 @@ const {getAcreditaciones, getAcreditacionesPorFacultad, getAcreditacionesPorCarr
     postInstancia, getFacultades, getFacultad, postFacultad, getCarreras, getCarrera, getCarrerasPorFac,
     postCarrera, putCarrera, getPersonas, getPersona, postPersonas, putPersonas, getParticipa,
     getParticipaId, getParticipaAc, postParticipa, putParticipaAct, getRoles, getRol, postRoles,
-    getTipoInstancia, getTipoInstanciaId, postTipoInstancia, putTipoInstancia,
+    getTipoInstancia, getTipoInstanciaId, postTipoInstancia, putTipoInstancia, getUniversidades,
     uploadFiles} = require('../controllers/acreditaciones.controller')
 const pool = require('../db');
 
@@ -81,5 +81,7 @@ router.post('/tipoInstancia', postTipoInstancia)
 router.put('/tipoInstancia', putTipoInstancia)
 
 router.post('/upload', uploadFiles)
+
+router.get('/universidades', getUniversidades)
 
 module.exports = router;

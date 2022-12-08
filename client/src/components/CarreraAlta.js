@@ -20,6 +20,8 @@ import Dialog from '@mui/material/Dialog';
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {OutlinedInput, Select} from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 
 const theme = createTheme({
     palette: {
@@ -34,6 +36,18 @@ const theme = createTheme({
         }
     }
 });
+
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
 
 
 /*PopUp*/
@@ -79,7 +93,7 @@ export default function CarreraAlta() {
     const {state} = useLocation()
     const {idf} = state;
     const navigate = useNavigate()
-    const [facultades,setFacultades] = useState(null);
+    const [universidades,setUniversidades] = useState({label: '', id: 0});
     const [carrera,setCarrera] = useState({
         CNombre: "",
         CTipo: "",
@@ -97,6 +111,7 @@ export default function CarreraAlta() {
         {label: 'A distancia', id: 'D'},
     ]
     const [fac,setFac] = useState({label: '', id: 0});
+    const [universidadesSel,setUniversidadesSel] = useState({label: '', id: 0});
     const [popUp,setPopUp] = React.useState(false);
     const [error,setError] = React.useState(false);
     const [tipoC, setTipo] = useState(null)
@@ -132,6 +147,12 @@ export default function CarreraAlta() {
             setCarrera({...carrera, 'CModalidad': v.id});
         }
     };
+    const handleChangeUniversidad = (e,v) => {
+
+        setUniversidadesSel({v});
+        console.log(universidadesSel)
+    };
+
     /*PopUp*/
     function handleClickOpen(){
         setPopUp(true)
@@ -143,12 +164,20 @@ export default function CarreraAlta() {
         navigate('/carreras', {state: {idf: idf}});
     }
     async function loadFacultades(idf){
-        console.log('1')
         const response = await fetch('http://localhost:4000/facultad/' + idf)
         const data = await response.json()
         var obj = {label: data[0].FNombre, id: data[0].id}
         setFac(obj)
-        console.log('2')
+    }
+    async function loadUniversidades(){
+        const response = await fetch('http://localhost:4000/universidades')
+        const data = await response.json()
+        var newList = [];
+        for(var i=0;i<data.length;i++){
+            var obj = {label: data[i].UNombre, id: data[i].id}
+            newList.push(obj)
+        }
+        setUniversidades(newList)
     }
 
     const handleAlta = async () =>{
@@ -181,6 +210,7 @@ export default function CarreraAlta() {
 
     useEffect(() => {
         loadFacultades(idf)
+        loadUniversidades()
     }, [])
 
     return(
@@ -249,6 +279,21 @@ export default function CarreraAlta() {
                                                         <TextField
                                                             {...params}
                                                             label="Modalidad"/>}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Autocomplete
+                                                    multiple
+                                                    limitTags={2}
+                                                    id="autocomplete-multiple-universidades"
+                                                    options={Object.values(universidades)}
+                                                    getOptionLabel={(option) => option.label}
+                                                    //defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                                                    onChange={handleChangeUniversidad}
+                                                    renderInput={(params) => (
+                                                        <TextField {...params} label="Universidades" placeholder="Buscar" />
+                                                    )}
+                                                    fullWidth
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>

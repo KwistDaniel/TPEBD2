@@ -21,7 +21,7 @@ export default function Carreras(){
     const {idf} = state;
     const [facultades,setFacultades] = useState({label: '', id: 0});
     const [carreras,setCarreras] = useState([])
-    const [fac,setFac] = useState(null);
+    const [fac,setFac] = useState({label: '', id: 0});
     const [showCarreras,setShowCarreras] = useState(false);
 
     /*Loaders*/
