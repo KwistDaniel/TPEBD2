@@ -154,12 +154,44 @@ export default function AcreditacionBorrar() {
         else{
             setEstadoAc(null);
         }
-        setDateFI(dayjs(data[0].AFechaInicio,"DD/MM/YYYY"))
-        if(((data[0].AFechaFin) === null) || ((data[0].AFechaFin) === "")) {
-            setDateFF(null)
+        var fi = (
+            data[0].AFechaInicio.substring(8,10).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(5,7).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(0,4).toString()
+        )
+        var fi2 = (
+            data[0].AFechaInicio.substring(0,4).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(5,7).toString() +
+            String.fromCharCode(47) +
+            data[0].AFechaInicio.substring(8,10).toString()
+        )
+        obj.fechaInicio = fi;
+        setDateFI(dayjs(fi2,"YYYY-MM-DD"))
+
+
+        if(data[0].AFechaFin !== null){
+            var ff = (
+                data[0].AFechaInicio.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(0,4).toString()
+            )
+            var ff2 = (
+                data[0].AFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].AFechaInicio.substring(8,10).toString()
+            )
+            obj.fechaFin = ff;
+            setDateFF(dayjs(ff2,"YYYY-MM-DD"))
         }
         else{
-            setDateFF(dayjs(data[0].AFechaFin,"DD/MM/YYYY"))
+            setDateFF(null)
         }
         setAcreditacion(obj)
     }

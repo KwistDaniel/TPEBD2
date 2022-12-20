@@ -19,6 +19,10 @@ const routes = require('./routes/routes');
  * npm install @mui/material @emotion/react @emotion/styled
  * npm install @mui/material @mui/styled-engine-sc styled-components
  * el IDE me instalo solo el resto de librerias a traves del package.json
+ *
+ * A dia 06/12/2022 al no obtener respuestas se frena el desarrollo, deberia enviarlo como esta actual para que quede registro de lo trabajado
+ * se estaban trabajando sobre modificaciones, por lo que deberia haber confflictos en alta de instancia o el edit de instancia ya que faltaba pasar eso a tipo date, faltan solicitar mas informacion a los profesores, esperando sus actuales respuestas para no empezar a desarrollar cambios que no pueda seguir trabajandolos
+ * algunas queries a la db podrian verse afectadas al ser modificada la estructura con los cambios solicitados
  */
 const app = express();
 

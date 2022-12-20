@@ -210,7 +210,7 @@ export default function InstanciaAlta() {
         }
         else{
             setDateFIIns(e);
-            setInstancia({...instancia, 'fechaInicio': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaInicio': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFPIns = e => {
@@ -219,7 +219,7 @@ export default function InstanciaAlta() {
             setInstancia({...instancia, 'fechaPresentacion': ""});
         } else {
             setDateFPIns(e);
-            setInstancia({...instancia, 'fechaPresentacion': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaPresentacion': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFLIns = e => {
@@ -228,18 +228,42 @@ export default function InstanciaAlta() {
             setInstancia({...instancia, 'fechaLimite': ""});
         } else {
             setDateFLIns(e);
-            setInstancia({...instancia, 'fechaLimite': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'fechaLimite': (e).format('YYYY-MM-DD')});
         }
     };
     const handleAlta = async () =>{
         /**
          * Alta Instasncia
          */
+        var fi;
+        if(instancia.fechaInicio === ""){
+            fi = null
+        }
+        else{
+            fi = instancia.fechaInicio
+        }
+        var fp;
+        if(instancia.fechaPresentacion === ""){
+            fp = null
+        }
+        else{
+            fp = instancia.fechaPresentacion
+        }
+        var fl;
+        if(instancia.fechaLimite === ""){
+            fl = null
+        }
+        else{
+            fl = instancia.fechaLimite
+        }
+
+
+
         var acrAlt = {
             IObservacion: instancia.observacion,
-            IFechaInicio: instancia.fechaInicio,
-            IFechaPresentacion: instancia.fechaPresentacion,
-            IFechaLimite: instancia.fechaLimite,
+            IFechaInicio: fi,
+            IFechaPresentacion: fp,
+            IFechaLimite: fl,
             idA: ida,
             idTI: tI.id,
         }

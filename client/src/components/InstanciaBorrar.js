@@ -192,16 +192,65 @@ export default function InstanciaBorrar() {
             }
         }
 
-        setDateFIIns(dayjs(obj.IFechaInicio,"DD/MM/YYYY"))
-
-        if(obj.IFechaPresentacion !== ''){
-            setDateFPIns(dayjs(obj.IFechaPresentacion,"DD/MM/YYYY"))
+        if(data[0].IFechaInicio !== null){
+            var fi = (
+                data[0].IFechaInicio.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaInicio.substring(0,4).toString()
+            )
+            var fi2 = (
+                data[0].IFechaInicio.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaInicio.substring(8,10).toString()
+            )
+            obj.IFechaInicio = fi;
+            setDateFIIns(dayjs(fi2,"YYYY-MM-DD"))
+        }
+        else{
+            setDateFIIns(null)
+        }
+        if(data[0].IFechaPresentacion !== null){
+            var fp = (
+                data[0].IFechaPresentacion.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaPresentacion.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaPresentacion.substring(0,4).toString()
+            )
+            var fp2 = (
+                data[0].IFechaPresentacion.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaPresentacion.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaPresentacion.substring(8,10).toString()
+            )
+            obj.IFechaPresentacion = fp;
+            setDateFPIns(dayjs(fp2,"YYYY-MM-DD"))
         }
         else{
             setDateFPIns(null)
         }
-        if(obj.IFechaLimite !== ''){
-            setDateFLIns(dayjs(obj.IFechaLimite,"DD/MM/YYYY"))
+        if(data[0].IFechaLimite !== null){
+            var fl = (
+                data[0].IFechaLimite.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaLimite.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaLimite.substring(0,4).toString()
+            )
+            var fl2 = (
+                data[0].IFechaLimite.substring(0,4).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaLimite.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                data[0].IFechaLimite.substring(8,10).toString()
+            )
+            obj.IFechaLimite = fl;
+            setDateFLIns(dayjs(fl2,"YYYY-MM-DD"))
         }
         else{
             setDateFLIns(null)

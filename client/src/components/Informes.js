@@ -170,6 +170,32 @@ export default function Informes(){
             else{
                 obj.Tipo = "Carrera en funcionamiento";
             }
+
+
+
+            var fi = (
+                dataA[j].AFechaInicio.substring(8,10).toString() +
+                String.fromCharCode(47) +
+                dataA[j].AFechaInicio.substring(5,7).toString() +
+                String.fromCharCode(47) +
+                dataA[j].AFechaInicio.substring(0,4).toString()
+            )
+            obj.AFechaInicio = fi;
+
+            if(dataA[j].AFechaFin !== null){
+                var ff = (
+                    dataA[j].AFechaFin.substring(8,10).toString() +
+                    String.fromCharCode(47) +
+                    dataA[j].AFechaFin.substring(5,7).toString() +
+                    String.fromCharCode(47) +
+                    dataA[j].AFechaFin.substring(0,4).toString()
+                )
+                obj.AFechaFin = ff;
+            }
+
+
+
+
             const responseCar = await fetch('http://localhost:4000/carrera/' + obj.idC)
             const dataCar = await responseCar.json()
             obj.ANomCar = dataCar[0].CNombre;
