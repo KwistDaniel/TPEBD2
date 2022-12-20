@@ -277,7 +277,7 @@ export default function InstanciaEdit() {
         }
         else{
             setDateFIIns(e);
-            setInstancia({...instancia, 'IFechaInicio': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'IFechaInicio': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFPIns = e => {
@@ -286,7 +286,7 @@ export default function InstanciaEdit() {
             setInstancia({...instancia, 'IFechaPresentacion': ""});
         } else {
             setDateFPIns(e);
-            setInstancia({...instancia, 'IFechaPresentacion': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'IFechaPresentacion': (e).format('YYYY-MM-DD')});
         }
     };
     const handleChangeFLIns = e => {
@@ -295,19 +295,40 @@ export default function InstanciaEdit() {
             setInstancia({...instancia, 'IFechaLimite': ""});
         } else {
             setDateFLIns(e);
-            setInstancia({...instancia, 'IFechaLimite': (e).format('DD/MM/YYYY')});
+            setInstancia({...instancia, 'IFechaLimite': (e).format('YYYY-MM-DD')});
         }
     };
     const handleEdit = async () =>{
         /**
          * Alta Instasncia
          */
+        var fi = null;
+        if(instancia.IFechaInicio === ""){
+            fi = null
+        }
+        else{
+            fi = instancia.IFechaInicio
+        }
+        var fp = null;
+        if(instancia.IFechaPresentacion === ""){
+            fp = null
+        }
+        else{
+            fp = instancia.IFechaPresentacion
+        }
+        var fl = null;
+        if(instancia.IFechaLimite === ""){
+            fl = null
+        }
+        else{
+            fl = instancia.IFechaLimite
+        }
         var obj = {
             id: idi,
             IObservacion: instancia.IObservacion,
-            IFechaInicio: instancia.IFechaInicio,
-            IFechaPresentacion: instancia.IFechaPresentacion,
-            IFechaLimite: instancia.IFechaLimite,
+            IFechaInicio: fi,
+            IFechaPresentacion: fp,
+            IFechaLimite: fl,
             idA: ida,
             idTI: instancia.idTI,
             status: true
