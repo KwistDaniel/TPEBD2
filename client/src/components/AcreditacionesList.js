@@ -458,12 +458,12 @@ export default function AcreditacionesList(){
             )},
         {field: 'Instancias', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button variant='text'
                                                                                                                                                        style={{color: 'black'}}
-                                                                                                                                                       onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.row.idA, idf: fac.id,idc: car.id}})}}
+                                                                                                                                                       onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.row.idA, idf: cellValues.row.idF,idc: cellValues.row.idC}})}}
             >Ver</Button>)}},
         {field: 'Participantes', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button
                 variant='text'
                 style={{color: 'black'}}
-                onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.row.idA, idf: fac.id,idc: car.id}})}}
+                onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.row.idA, idf: cellValues.row.idF,idc: cellValues.row.idC}})}}
             >Ver</Button>)}},
         {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
         {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
@@ -549,12 +549,12 @@ export default function AcreditacionesList(){
             )},
         {field: 'Instancias', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button variant='text'
                                                                                                                                                        style={{color: 'black'}}
-                                                                                                                                                       onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.row.idA, idf: fac.id,idc: car.id}})}}
+                                                                                                                                                       onClick={() => {navigate('/instancias/list' , {state: {ida: cellValues.row.idA, idf: cellValues.row.idF,idc: cellValues.row.idC}})}}
             >Ver</Button>)}},
         {field: 'Participantes', flex: 1, headerAlign: 'center', headerClassName: 'super-app-theme--header', renderCell: (cellValues) => {return (<Button
                 variant='text'
                 style={{color: 'black'}}
-                onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.row.idA, idf: fac.id,idc: car.id}})}}
+                onClick={(e) => {navigate('/participantes/list', {state: {ida: cellValues.row.idA, idf: cellValues.row.idF,idc: cellValues.row.idC}})}}
             >Ver</Button>)}},
         {field: 'idF', headerName: 'FacultadC', flex: 1, hide: true},
         {field: 'idC', headerName: 'CarreraC', flex: 1, hide: true},
